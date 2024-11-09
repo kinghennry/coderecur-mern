@@ -17,6 +17,8 @@ export default function Home() {
       setShowMore(false)
     }
   }, [dispatch])
+
+  console.log(posts,"posts")
   return (
     <>
       <div className='flex flex-col gap-6 p-28 px-3 max-w-6xl mx-auto '>

@@ -77,7 +77,7 @@ export const getsinglepost = createAsyncThunk(
   '/post/getsinglepost',
   async (postSlug) => {
     const res = await axios.get(
-      `${import.meta.env.VITE_SERVER}/api/post/getposts?slug=${postSlug}`
+      `${import.meta.env.VITE_SERVER}/post/getposts?slug=${postSlug}`
     )
     return res.data
   }
@@ -85,14 +85,14 @@ export const getsinglepost = createAsyncThunk(
 //recentPosts
 export const recentposts = createAsyncThunk('/post/recentposts', async () => {
   const { data } = await axios.get(
-    `${import.meta.env.VITE_SERVER}/api/post/getposts?limit=3`
+    `${import.meta.env.VITE_SERVER}/post/getposts?limit=3`
   )
   return data
 })
 // https://coderecur-client.onrender.com
 export const getposts = createAsyncThunk('/post/getposts', async () => {
   const { data } = await axios.get(
-    `${import.meta.env.VITE_SERVER}/api/post/getposts`
+    `${import.meta.env.VITE_SERVER}/post/getposts`
   )
   return data
 })
@@ -100,7 +100,7 @@ export const dashboardposts = createAsyncThunk(
   '/post/dashboardposts',
   async () => {
     const { data } = await axios.get(
-      `${import.meta.env.VITE_SERVER}/api/post/getposts?limit=5`
+      `${import.meta.env.VITE_SERVER}/post/getposts?limit=5`
     )
     return data
   }
@@ -123,54 +123,54 @@ const postSlice = createSlice({
         state.isLoading = false
         state.posts = []
       })
-    // .addCase(addPosts.pending, (state) => {
-    //   state.isLoading = true
-    // })
-    // .addCase(addPosts.fulfilled, (state, action) => {
-    //   state.isLoading = false
-    //   state.posts = action.payload
-    // })
-    // .addCase(addPosts.rejected, (state) => {
-    //   state.isLoading = false
-    //   state.posts = []
-    // })
-    .addCase(recentposts.pending, (state) => {
-      state.isLoading = true
-    })
-    .addCase(recentposts.fulfilled, (state, action) => {
-      state.isLoading = false
-      state.recentPosts = action.payload.posts
-    })
-    .addCase(recentposts.rejected, (state) => {
-      state.isLoading = false
-      state.recentPosts = []
-    })
-    .addCase(getsinglepost.pending, (state) => {
-      state.isLoading = true
-    })
-    .addCase(getsinglepost.fulfilled, (state, action) => {
-      state.isLoading = false
-      state.singlePost = action.payload.posts
-    })
-    .addCase(getsinglepost.rejected, (state) => {
-      state.isLoading = false
-      state.singlePost = null
-    })
-    .addCase(dashboardposts.pending, (state) => {
-      state.isLoading = true
-    })
-    .addCase(dashboardposts.fulfilled, (state, action) => {
-      state.isLoading = false
-      state.posts = action.payload.posts
-      state.totalPosts = action.payload.totalPosts
-      state.lastMonthPosts = action.payload.lastMonthPosts
-    })
-    .addCase(dashboardposts.rejected, (state) => {
-      state.isLoading = false
-      state.posts = []
-      state.totalPosts = 0
-      state.lastMonthPosts = 0
-    })
+      // .addCase(addPosts.pending, (state) => {
+      //   state.isLoading = true
+      // })
+      // .addCase(addPosts.fulfilled, (state, action) => {
+      //   state.isLoading = false
+      //   state.posts = action.payload
+      // })
+      // .addCase(addPosts.rejected, (state) => {
+      //   state.isLoading = false
+      //   state.posts = []
+      // })
+      .addCase(recentposts.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(recentposts.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.recentPosts = action.payload.posts
+      })
+      .addCase(recentposts.rejected, (state) => {
+        state.isLoading = false
+        state.recentPosts = []
+      })
+      .addCase(getsinglepost.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getsinglepost.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.singlePost = action.payload.posts
+      })
+      .addCase(getsinglepost.rejected, (state) => {
+        state.isLoading = false
+        state.singlePost = null
+      })
+      .addCase(dashboardposts.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(dashboardposts.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.posts = action.payload.posts
+        state.totalPosts = action.payload.totalPosts
+        state.lastMonthPosts = action.payload.lastMonthPosts
+      })
+      .addCase(dashboardposts.rejected, (state) => {
+        state.isLoading = false
+        state.posts = []
+        state.totalPosts = 0
+        state.lastMonthPosts = 0
+      })
     // .addCase(getuserposts.pending, (state) => {
     //   state.isLoading = true
     // })
