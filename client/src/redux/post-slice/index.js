@@ -9,7 +9,7 @@ const initialState = {
   lastMonthPosts: 0,
   singlePost: null,
 }
-// https://coderecur.onrender.com (backend)
+// https://coderecur-server.onrender.com (backend)
 //addPosts
 // export const addPosts = createAsyncThunk(
 //   '/post/create',
