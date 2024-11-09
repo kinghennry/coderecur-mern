@@ -6,7 +6,7 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit'
 import postSlice from './post-slice'
 // import commentSlice fro../../picaboo-client/redux/comments-sliceice'
 // import userSlice fro../../picaboo-client/redux/users-sliceice'
-// import shopSearchSlice fro../../picaboo-client/redux/search-sliceice'
+import shopSearchSlice from './search-slice'
 
 // const persistConfig = {
 //   key: 'root',
@@ -19,7 +19,7 @@ const rootReducer = combineReducers({
   // theme: themeSlice,
   posts: postSlice,
   // comments: commentSlice,
-  // shopSearch: shopSearchSlice,
+  shopSearch: shopSearchSlice,
   // user: userSlice,
 })
 

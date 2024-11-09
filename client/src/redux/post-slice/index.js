@@ -77,7 +77,7 @@ export const getsinglepost = createAsyncThunk(
   '/post/getsinglepost',
   async (postSlug) => {
     const res = await axios.get(
-      `${import.meta.env.VITE_SERVER}/post/getposts?slug=${postSlug}`
+      `${import.meta.env.VITE_SERVER}/api/post/getposts?slug=${postSlug}`
     )
     return res.data
   }
@@ -85,14 +85,14 @@ export const getsinglepost = createAsyncThunk(
 //recentPosts
 export const recentposts = createAsyncThunk('/post/recentposts', async () => {
   const { data } = await axios.get(
-    `${import.meta.env.VITE_SERVER}/post/getposts?limit=3`
+    `${import.meta.env.VITE_SERVER}/api/post/getposts?limit=3`
   )
   return data
 })
 // https://coderecur-client.onrender.com
 export const getposts = createAsyncThunk('/post/getposts', async () => {
   const { data } = await axios.get(
-    `${import.meta.env.VITE_SERVER}/post/getposts`
+    `${import.meta.env.VITE_SERVER}/api/post/getposts`
   )
   return data
 })
@@ -100,7 +100,7 @@ export const dashboardposts = createAsyncThunk(
   '/post/dashboardposts',
   async () => {
     const { data } = await axios.get(
-      `${import.meta.env.VITE_SERVER}/post/getposts?limit=5`
+      `${import.meta.env.VITE_SERVER}/api/post/getposts?limit=5`
     )
     return data
   }
