@@ -9,7 +9,7 @@ const initialState = {
   lastMonthPosts: 0,
   singlePost: null,
 }
-
+// https://coderecur.onrender.com (backend)
 //addPosts
 // export const addPosts = createAsyncThunk(
 //   '/post/create',
@@ -87,7 +87,9 @@ const initialState = {
 // })
 
 export const getposts = createAsyncThunk('/post/getposts', async () => {
-  const { data } = await axios.get(`/api/post/getposts`)
+  const { data } = await axios.get(
+    `${import.meta.env.SERVER}/post/getposts`
+  )
   return data
 })
 // export const dashboardposts = createAsyncThunk(
