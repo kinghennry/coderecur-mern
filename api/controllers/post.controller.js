@@ -1,30 +1,50 @@
 import Post from '../models/post.model.js'
-// import { errorHandler } from '../coderecur-api/utils/error.js'
+// import { errorHandler } from '../utils/error.js'
 
-// export const create = async (req, res, next) => {
-//   // if (!req.user.isAdmin) {
-//   //   return next(errorHandler(403, 'You are not allowed to create a post'))
-//   // }
-//   if (!req.body.title || !req.body.content) {
-//     return next(errorHandler(400, 'Please provide all required fields'))
-//   }
-//   const slug = req.body.title
-//     .split(' ')
-//     .join('-')
-//     .toLowerCase()
-//     .replace(/[^a-zA-Z0-9-]/g, '')
-//   const newPost = new Post({
-//     ...req.body,
-//     slug,
-//     userId: req.user.id,
-//   })
-//   try {
-//     const savedPost = await newPost.save()
-//     res.status(201).json(savedPost)
-//   } catch (error) {
-//     next(error)
-//   }
-// }
+export const create = async (req, res, next) => {
+  // if (!req.user.isAdmin) {
+  //   return next(errorHandler(403, 'You are not allowed to create a post'))
+  // }
+  if (!req.body.title || !req.body.content) {
+    // return next(errorHandler(400, 'Please provide all required fields'))
+    return res.json({
+      success: false,
+      message: 'All fields are required!',
+    })
+  }
+  const { title } = req.body
+  const commonTitle = await Post.findOne({ title })
+
+  if (commonTitle) {
+    return res.json({
+      success: false,
+      message: 'Recur Title already used!',
+    })
+  }
+  const slug = req.body.title
+    .split(' ')
+    .join('-')
+    .toLowerCase()
+    .replace(/[^a-zA-Z0-9-]/g, '')
+  const newPost = new Post({
+    ...req.body,
+    slug,
+    userId: req.body.userId,
+  })
+  try {
+    const savedPost = await newPost.save()
+    res.status(200).json({
+      success: true,
+      savedPost: savedPost,
+    })
+  } catch (e) {
+    res.status(500).json({
+      success: false,
+      message: 'Some error occured',
+    })
+    console.log(e)
+  }
+}
 
 export const getposts = async (req, res, next) => {
   try {
@@ -67,22 +87,33 @@ export const getposts = async (req, res, next) => {
       lastMonthPosts,
     })
   } catch (error) {
-    next(error)
+    // next(error)
+    res.status(500).json({
+      success: false,
+      message: 'Some error occured',
+    })
   }
 }
 
-// export const deletepost = async (req, res, next) => {
-//   //* already handled in check-auth ❗
-//   // if (req.user.id !== req.params.userId) {
-//   //   return next(errorHandler(403, 'You are not allowed to delete this post'))
-//   // }
-//   try {
-//     await Post.findByIdAndDelete(req.params.postId)
-//     res.status(200).json('The post has been deleted')
-//   } catch (error) {
-//     next(error)
-//   }
-// }
+export const deletepost = async (req, res, next) => {
+  //* already handled in check-auth ❗
+  // if (req.user.id !== req.params.userId) {
+  //   return next(errorHandler(403, 'You are not allowed to delete this post'))
+  // }
+  try {
+    await Post.findByIdAndDelete(req.params.postId)
+    res.status(200).json({
+      success: true,
+      message: 'Post deleted!',
+    })
+  } catch (error) {
+    // next(error)
+    res.status(500).json({
+      success: false,
+      message: 'Some error occured',
+    })
+  }
+}
 
 // export const updatepost = async (req, res, next) => {
 //   if (req.user.id !== req.params.userId) {

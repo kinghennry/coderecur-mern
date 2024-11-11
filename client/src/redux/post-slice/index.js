@@ -9,26 +9,15 @@ const initialState = {
   lastMonthPosts: 0,
   singlePost: null,
 }
-// https://coderecur-server.onrender.com (backend)
 //addPosts
-// export const addPosts = createAsyncThunk(
-//   '/post/create',
-//   async ({ formItem, toast, navigate }) => {
-//     try {
-//       const res = await axios.post(`/api/post/create`, formItem, {
-//         headers: { 'Content-Type': 'application/json' },
-//         withCredentials: true,
-//       })
-//       if (res?.status === 201) {
-//         navigate(`/post/${res.data.slug}`)
-//         toast.success(`New Recur Created!`)
-//       }
-//       return res.data
-//     } catch (err) {
-//       toast.error(err?.response?.data?.message)
-//     }
-//   }
-// )
+export const addPosts = createAsyncThunk('/post/create', async (formData) => {
+  const { data } = await axios.post(
+    `${import.meta.env.VITE_SERVER}/api/post/create`,
+    formData,
+    { headers: { 'Content-Type': 'application/json' }, withCredentials: true }
+  )
+  return data
+})
 
 // export const updatePosts = createAsyncThunk(
 //   '/post/update',
@@ -53,26 +42,24 @@ const initialState = {
 //   }
 // )
 //getUserPosts
-// export const getuserposts = createAsyncThunk(
-//   '/posts/getuserposts',
-//   async ({ userId, toast }) => {
-//     try {
-//       const res = await axios.get(`/api/post/getposts?userId=${userId}`)
-//       return res.data
-//     } catch (err) {
-//       toast.error('Something went wrong')
-//     }
-//   }
-// )
-// export const deletepost = createAsyncThunk(
-//   '/post/deletepost',
-//   async ({ postId, userId }) => {
-//     const { data } = await axios.delete(
-//       `/api/post/deletepost/${postId}/${userId}`
-//     )
-//     return data
-//   }
-// )
+export const getuserposts = createAsyncThunk(
+  '/posts/getuserposts',
+  async (userId) => {
+    const res = await axios.get(
+      `${import.meta.env.VITE_SERVER}/api/post/getposts?userId=${userId}`
+    )
+    return res.data
+  }
+)
+export const deletepost = createAsyncThunk(
+  '/post/deletepost',
+  async ({ postId, userId }) => {
+    const { data } = await axios.delete(
+      `${import.meta.env.VITE_SERVER}/api/post/deletepost/${postId}/${userId}`
+    )
+    return data
+  }
+)
 export const getsinglepost = createAsyncThunk(
   '/post/getsinglepost',
   async (postSlug) => {
@@ -89,7 +76,6 @@ export const recentposts = createAsyncThunk('/post/recentposts', async () => {
   )
   return data
 })
-// https://coderecur-client.onrender.com
 export const getposts = createAsyncThunk('/post/getposts', async () => {
   const { data } = await axios.get(
     `${import.meta.env.VITE_SERVER}/api/post/getposts`
@@ -123,17 +109,17 @@ const postSlice = createSlice({
         state.isLoading = false
         state.posts = []
       })
-      // .addCase(addPosts.pending, (state) => {
-      //   state.isLoading = true
-      // })
-      // .addCase(addPosts.fulfilled, (state, action) => {
-      //   state.isLoading = false
-      //   state.posts = action.payload
-      // })
-      // .addCase(addPosts.rejected, (state) => {
-      //   state.isLoading = false
-      //   state.posts = []
-      // })
+      .addCase(addPosts.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(addPosts.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.posts = action.payload.savedPost
+      })
+      .addCase(addPosts.rejected, (state) => {
+        state.isLoading = false
+        state.posts = []
+      })
       .addCase(recentposts.pending, (state) => {
         state.isLoading = true
       })
@@ -171,17 +157,17 @@ const postSlice = createSlice({
         state.totalPosts = 0
         state.lastMonthPosts = 0
       })
-    // .addCase(getuserposts.pending, (state) => {
-    //   state.isLoading = true
-    // })
-    // .addCase(getuserposts.fulfilled, (state, action) => {
-    //   state.isLoading = false
-    //   state.posts = action.payload.posts
-    // })
-    // .addCase(getuserposts.rejected, (state) => {
-    //   state.isLoading = false
-    //   state.posts = []
-    // })
+      .addCase(getuserposts.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getuserposts.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.posts = action.payload.posts
+      })
+      .addCase(getuserposts.rejected, (state) => {
+        state.isLoading = false
+        state.posts = []
+      })
   },
 })
 

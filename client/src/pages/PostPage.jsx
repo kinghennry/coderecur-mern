@@ -4,7 +4,7 @@ import { getsinglepost, recentposts } from '../redux/post-slice'
 import PostCard from '../components/PostCard.jsx'
 import { Link, useParams } from 'react-router-dom'
 import { Button, Spinner } from 'flowbite-react'
-// import CommentSection from '../components/CommentSection.jsx'
+import CommentSection from '../components/CommentSection.jsx'
 
 export default function PostPage() {
   //get the slug name for params
@@ -67,7 +67,7 @@ export default function PostPage() {
         dangerouslySetInnerHTML={{ __html: pagePost && pagePost.content }}
       ></div>
 
-      {/* <CommentSection postId={pagePost && pagePost?._id} /> */}
+      <CommentSection postId={pagePost && pagePost?._id} />
 
       <div className='flex flex-col justify-center items-center mb-5'>
         <h1 className='text-xl mt-5'>Recent articles</h1>

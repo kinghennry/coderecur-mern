@@ -6,11 +6,10 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 
 //* import routes
-// import userRoutes from './routes/user.route.js'
+import userRoutes from './routes/user.route.js'
 import authRoutes from './routes/auth.route.js'
 import postRoutes from './routes/post.route.js'
-// import commentRoutes fro./coderecur-api/routes/comment.route.js.js'
-// import path from 'path'
+import commentRoutes from './routes/comment.route.js'
 
 dotenv.config()
 
@@ -22,8 +21,6 @@ mongoose
   .catch((err) => {
     console.log(err)
   })
-
-// const __dirname = path.resolve()
 
 const app = express()
 
@@ -47,16 +44,10 @@ app.use(
 
 const PORT = process.env.PORT || 5000
 
-// app.use(express.static(path.join(__dirname, '/client/dist')))
-
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'))
-// })
-
-// app.use('/api/user', userRoutes)
+app.use('/api/user', userRoutes)
 app.use('/api/auth', authRoutes)
 app.use('/api/post', postRoutes)
-// app.use('/api/comment', commentRoutes)
+app.use('/api/comment', commentRoutes)
 
 app.listen(PORT, () => console.log(`Server is now running on port ${PORT}`))
 

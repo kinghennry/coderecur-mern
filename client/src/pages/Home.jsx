@@ -4,6 +4,7 @@ import PostCard from '../components/PostCard.jsx'
 import { getposts } from '../redux/post-slice/index.js'
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { Spinner } from 'flowbite-react'
 
 export default function Home() {
   const { posts, isLoading } = useSelector((state) => state.posts)
@@ -18,7 +19,6 @@ export default function Home() {
     }
   }, [dispatch])
 
-  console.log(posts,"posts")
   return (
     <>
       <div className='flex flex-col gap-6 p-28 px-3 max-w-6xl mx-auto '>
@@ -39,6 +39,11 @@ export default function Home() {
         <div className='flex flex-col justify-center items-center mb-5'>
           <h1 className='text-xl mt-5'>Recent Posts</h1>
           <div className='flex flex-wrap gap-5 mt-5 justify-center'>
+            {isLoading && (
+              <div className='my-5'>
+                <Spinner size='xl' />
+              </div>
+            )}
             {posts && posts.length > 0
               ? posts.map((post) => <PostCard key={post._id} post={post} />)
               : null}

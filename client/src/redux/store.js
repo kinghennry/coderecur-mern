@@ -1,11 +1,9 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit'
-// import { persistReducer, persistStore } from 'redux-persist'
-// import storage from 'redux-persist/lib/storage'
-// import authSlice fro../../picaboo-client/redux/auth-sliceice'
-// import themeSlice fro../../picaboo-client/redux/theme-sliceice'
+import themeSlice from './theme-slice'
 import postSlice from './post-slice'
-// import commentSlice fro../../picaboo-client/redux/comments-sliceice'
-// import userSlice fro../../picaboo-client/redux/users-sliceice'
+import authSlice from './auth-slice'
+import commentSlice from './comments-slice'
+import userSlice from './users-slice'
 import shopSearchSlice from './search-slice'
 
 // const persistConfig = {
@@ -15,12 +13,12 @@ import shopSearchSlice from './search-slice'
 // }
 
 const rootReducer = combineReducers({
-  // auth: authSlice,
-  // theme: themeSlice,
+  auth: authSlice,
+  theme: themeSlice,
   posts: postSlice,
-  // comments: commentSlice,
+  comments: commentSlice,
   shopSearch: shopSearchSlice,
-  // user: userSlice,
+  user: userSlice,
 })
 
 // const persistedReducer = persistReducer(persistConfig, rootReducer)
